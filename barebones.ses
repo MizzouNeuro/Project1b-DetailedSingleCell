@@ -1,6 +1,6 @@
 {load_file("nrngui.hoc")}
 objectvar save_window_, rvp_
-objectvar scene_vector_[6]
+objectvar scene_vector_[5]
 objectvar ocbox_, ocbox_list_, scene_, scene_list_
 {ocbox_list_ = new List()  scene_list_ = new List()}
 {pwman_place(0,0,0)}
@@ -1359,53 +1359,6 @@ set_default()
 }
 {object_push(memb)}
 {first=0}
-{
-tobj = new MechanismStandard("kdrinter")
-tobj.set("gkdrbar_kdrinter", 0.008, 0)
-tobj = new MStanWrap(tobj, 1)
-bild.subsets.snlist.object(1).ml.append(tobj)
-}
-{
-tobj = new MechanismStandard("leakinter")
-tobj.set("glbar_inter_leakinter", 3.3333e-005, 0)
-tobj.set("el_leakinter", -75, 0)
-tobj = new MStanWrap(tobj, 1)
-bild.subsets.snlist.object(1).ml.append(tobj)
-}
-{
-tobj = new MechanismStandard("nainter")
-tobj.set("gnabar_nainter", 0.035, 0)
-tobj = new MStanWrap(tobj, 1)
-bild.subsets.snlist.object(1).ml.append(tobj)
-}
-{
-tobj = new FakeMechStan(1)
-tobj.value = 1
-tobj.set_default()
-tobj = new MStanWrap(tobj, 0)
-bild.subsets.snlist.object(1).ml.append(tobj)
-}
-{
-tobj = new FakeMechStan(0)
-tobj.value = 35.4
-tobj.set_default()
-tobj = new MStanWrap(tobj, 0)
-bild.subsets.snlist.object(1).ml.append(tobj)
-}
-{
-tobj = new FakeMechStan(1)
-tobj.value = 1
-tobj.set_default()
-tobj = new MStanWrap(tobj, 0)
-bild.subsets.snlist.object(2).ml.append(tobj)
-}
-{
-tobj = new MechanismStandard("leakinter")
-tobj.set("glbar_inter_leakinter", 3.33333e-005, 0)
-tobj.set("el_leakinter", -75, 0)
-tobj = new MStanWrap(tobj, 1)
-bild.subsets.snlist.object(2).ml.append(tobj)
-}
 {object_pop()}
 {
 }
@@ -1428,85 +1381,24 @@ cexport()
 {
 save_window_=ocbox_.gtopol
 save_window_.size(-200,200,-150,150)
-scene_vector_[2] = save_window_
+scene_vector_[3] = save_window_
 ocbox_.gtopol = save_window_
 save_window_.save_name("ocbox_.gtopol")
 }
 {
-ocbox_.map("CellBuild[0]", 349, 26, 864, 407.7)
+ocbox_.map("CellBuild[0]", 577, 214, 580.5, 353.7)
 }
 objref ocbox_
 //End CellBuild[0]
 
-
-//Begin PointProcessManager
-{
-load_file("pointman.hoc")
-}
-{
-soma ocbox_ = new PointProcessManager(0)
-}
-{object_push(ocbox_)}
-{
-mt.select("IClamp") i = mt.selected()
-ms[i] = new MechanismStandard("IClamp")
-ms[i].set("del", 100, 0)
-ms[i].set("dur", 200, 0)
-ms[i].set("amp", 0.1, 0)
-mt.select("IClamp") i = mt.selected() maction(i)
-hoc_ac_ = 0.5
-sec.sec move() d1.flip_to(0)
-}
-{object_pop() doNotify()}
-{
-ocbox_ = ocbox_.v1
-ocbox_.map("PointProcessManager", 1492, 54, 222.3, 339.3)
-}
-objref ocbox_
-//End PointProcessManager
-
 {
 save_window_ = new PlotShape(0)
-save_window_.size(-290.344,250.344,-144.57,254.57)
+save_window_.size(-290.344,250.344,-180,290)
 save_window_.variable("v")
-scene_vector_[3] = save_window_
-{save_window_.view(-290.344, -144.57, 540.688, 399.14, 777, 561, 315.9, 231.4)}
+scene_vector_[4] = save_window_
+{save_window_.view(-290.344, -180, 540.688, 470, 150, 241, 315.9, 276.4)}
 fast_flush_list.append(save_window_)
 save_window_.save_name("fast_flush_list.")
-}
-{
-xpanel("RunControl", 0)
-v_init = -65
-xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
-xbutton("Init & Run","run()")
-xbutton("Stop","stoprun=1")
-runStopAt = 5
-xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
-runStopIn = 1
-xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
-xbutton("Single Step","steprun()")
-t = 500
-xvalue("t","t", 2 )
-tstop = 500
-xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
-dt = 0.025
-xvalue("dt","dt", 1,"setdt()", 0, 1 )
-steps_per_ms = 40
-xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
-screen_update_invl = 0.05
-xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
-realtime = 0.38
-xvalue("Real Time","realtime", 0,"", 0, 1 )
-xpanel(1491,498)
-}
-{
-save_window_ = new Graph(0)
-save_window_.size(0,500,-76,18)
-scene_vector_[5] = save_window_
-{save_window_.view(0, -76, 500, 94, 358, 561, 308.7, 199.9)}
-graphList[0].append(save_window_)
-save_window_.save_name("graphList[0].")
-save_window_.addexpr("v(.5)", 1, 1, 0.8, 0.9, 2)
 }
 objectvar scene_vector_[1]
 {doNotify()}
